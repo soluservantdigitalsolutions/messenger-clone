@@ -1,4 +1,5 @@
 "use client";
+import axios from "axios";
 import Button from "@/app/components/Button";
 import Input from "@/app/components/inputs/Input";
 import React, { useCallback, useState } from "react";
@@ -6,6 +7,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import AuthSocialButton from "./AuthSocialButton";
 import { FcGoogle } from "react-icons/fc";
 import { BsGithub } from "react-icons/bs";
+import toast from "react-hot-toast";
 
 type Variant = "LOGIN" | "REGISTER";
 const AuthForm = () => {
@@ -40,7 +42,16 @@ const AuthForm = () => {
     }
 
     if (variant === "REGISTER") {
-      //register
+      axios
+        .post("/api/register", data)
+        .then((response) => {
+          toast.success("Account created successfully");
+        })
+        .catch((error) => {
+          toast.error(error.response.data || "something went wrong");
+        }).finally(()=>{
+          setIsLoading(false)
+        });
     }
   };
 
