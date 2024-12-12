@@ -3,6 +3,7 @@ import useConversation from "@/app/hooks/useConversation";
 import useRoutes from "@/app/hooks/useRoutes";
 import React from "react";
 import MobileItem from "./MobileItem";
+import clsx from "clsx";
 
 const MobileFooter = () => {
   const routes = useRoutes();
@@ -13,7 +14,8 @@ const MobileFooter = () => {
   }
   return (
     <div
-      className="
+      className={clsx(
+        `
     lg:hidden
     fixed
     justify-between
@@ -24,7 +26,9 @@ const MobileFooter = () => {
     items-center
     bg-white
     border-t-[1px]
-    "
+    `,
+        isOpen && "hidden"
+      )}
     >
       {routes.map((route) => (
         <MobileItem
