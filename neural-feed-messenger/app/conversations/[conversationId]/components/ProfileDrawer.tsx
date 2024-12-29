@@ -8,6 +8,7 @@ import { format } from "date-fns";
 import React, { useMemo, Fragment, useState } from "react";
 import { IoClose, IoTrash } from "react-icons/io5";
 import ConfirmModal from "./ConfirmModal";
+import AvatarGroup from "@/app/components/AvatarGroup";
 
 interface ProfileDrawerProps {
   isOpen: boolean;
@@ -136,7 +137,11 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                     >
                       <div className="flex flex-col items-center">
                         <div className="mb-2">
-                          <Avatar user={otherUser} />
+                          {data.isGroup ? (
+                            <AvatarGroup users={data.users} />
+                          ) : (
+                            <Avatar user={otherUser} />
+                          )}
                         </div>
                         <div>{title}</div>
                         <div className="text-sm text-gray-500">
@@ -181,6 +186,40 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                       sm:px-6
                       "
                         >
+                          <div>
+                            <dt
+                              className="
+                              text-sm
+                              font-medium
+                              text-gray-500
+                              sm:w-40
+                              sm:flex-shrink-0
+                              "
+                            >
+                              Members
+                            </dt>
+                            <dd
+                              className="
+                            mt-2
+                            text-sm
+                            text-gray-900
+                            sm:col-span-2
+                            gap-y-5
+                            flex
+                            flex-col
+                            "
+                            >
+                              {data.users.map((user) => (
+                                <div
+                                  key={user.id}
+                                  className="flex items-center"
+                                >
+                                  <Avatar user={user} />
+                                  <span className="ml-2">{user.name}</span>
+                                </div>
+                              ))}
+                            </dd>
+                          </div>
                           {!data.isGroup && (
                             <div>
                               <dt
